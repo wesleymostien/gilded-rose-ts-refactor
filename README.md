@@ -20,7 +20,6 @@ Ensure you have the following installed on your system:
 
     ```bash
     git clone https://github.com/wesleymostien/gilded-rose-ts-refactor
-    cd TypeScript
     ```
 
 2.  **Install TypeScript (if not already present):**

@@ -1,5 +1,4 @@
 import { ITEM } from "./item.constant";
-import type { ItemName } from "./item.type";
 import {
   getItemType,
   isAgedBrie,
