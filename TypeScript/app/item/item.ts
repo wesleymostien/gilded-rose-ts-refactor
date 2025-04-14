@@ -1,4 +1,6 @@
+import { ITEM } from "./item.constant";
 import { ItemData, ItemName } from "./item.type";
+import { getItemType, isSulfuras } from "./item.util";
 
 export class Item {
   name: ItemName.All;
@@ -8,70 +10,67 @@ export class Item {
   static readonly MAX_QUALITY = 50;
   static readonly MIN_QUALITY = 0;
 
-  static readonly DEFAULT_QUALITY = Item.MAX_QUALITY;
-  static readonly DEFAULT_SELL_IN = 10;
+  static readonly DEFAULT = {
+    QUALITY: Item.MAX_QUALITY,
+    SULFURAS_QUALITY: 80,
+
+    SELL_IN: 10,
+  };
 
   constructor(itemData: ItemData) {
     this.name = itemData.name;
-    this.sellIn = itemData.sellIn ?? Item.DEFAULT_SELL_IN;
-    this.quality = this.constructQuality(itemData.quality);
+    this.sellIn = itemData.sellIn ?? Item.DEFAULT.SELL_IN;
+    this.quality = this.setQuality(itemData.quality);
   }
 
-  private constructQuality(value: number = Item.DEFAULT_QUALITY): number {
-    let validValue = value;
-
-    if (validValue < Item.MIN_QUALITY) {
-      validValue = Item.MIN_QUALITY;
-    }
-
-    if (validValue > Item.MAX_QUALITY) {
-      validValue = Item.MAX_QUALITY;
-    }
-
-    return validValue;
+  private setQuality(newQuality = Item.DEFAULT.QUALITY): number {
+    return (this.quality = isSulfuras(this.name)
+      ? Item.DEFAULT.SULFURAS_QUALITY
+      : Math.min(Item.MAX_QUALITY, Math.max(Item.MIN_QUALITY, newQuality)));
   }
 
   update(): void {
-    if (this.name !== "Aged Brie" && this.name !== "Backstage passes") {
-      if (this.quality > 0) {
-        if (this.name !== "Sulfuras, Hand of Ragnaros") {
-          this.quality--;
-        }
-      }
-    } else {
-      if (this.quality < Item.MAX_QUALITY) {
-        this.quality++;
-        if (this.name === "Backstage passes") {
-          if (this.sellIn < 11) {
-            this.quality = Math.min(Item.MAX_QUALITY, this.quality + 1);
-          }
-          if (this.sellIn < 6) {
-            this.quality = Math.min(Item.MAX_QUALITY, this.quality + 1);
-          }
-        }
-      }
+    const itemType = getItemType(this.name);
+
+    if (itemType === ITEM.Sulfuras) {
+      return;
     }
 
-    if (this.name !== "Sulfuras, Hand of Ragnaros") {
-      this.sellIn--;
-    }
+    let factor = -1;
+    this.sellIn--;
 
     if (this.sellIn < 0) {
-      if (this.name !== "Aged Brie") {
-        if (this.name !== "Backstage passes") {
-          if (this.quality > 0) {
-            if (this.name !== "Sulfuras, Hand of Ragnaros") {
-              this.quality--;
-            }
-          }
-        } else {
-          this.quality = 0;
-        }
-      } else {
-        if (this.quality < Item.MAX_QUALITY) {
-          this.quality++;
-        }
-      }
+      factor = factor * 2;
     }
+
+    switch (itemType) {
+      case ITEM.AgedBrie:
+        factor = factor * -1;
+        break;
+
+      case ITEM.BackstagePasses:
+        if (this.sellIn < 0) {
+          this.setQuality(Item.MIN_QUALITY);
+          return;
+        }
+
+        factor = factor * -1;
+
+        if (this.sellIn < 6) {
+          factor = factor * 3;
+        } else if (this.sellIn < 11) {
+          factor = factor * 2;
+        }
+        break;
+
+      case ITEM.Conjured:
+        factor = factor * 2;
+        break;
+
+      default:
+        break;
+    }
+
+    this.setQuality(this.quality + factor);
   }
 }

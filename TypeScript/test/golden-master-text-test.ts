@@ -4,15 +4,15 @@ import { GildedRose } from "../app/gilded-rose/gilded-rose";
 console.log("OMGHAI!");
 
 const items = [
-  new Item("+5 Dexterity Vest", 10, 20),
-  new Item("Aged Brie", 2, 0),
-  new Item("Elixir of the Mongoose", 5, 7),
-  new Item("Sulfuras, Hand of Ragnaros", 0, 80),
-  new Item("Sulfuras, Hand of Ragnaros", -1, 80),
-  new Item("Backstage passes", 15, 20),
-  new Item("Backstage passes", 10, 49),
-  new Item("Backstage passes", 5, 49),
-  new Item("Conjured Mana Cake", 3, 6),
+  new Item({ name: "+5 Dexterity Vest", sellIn: 10, quality: 20 }),
+  new Item({ name: "Aged Brie", sellIn: 2, quality: 0 }),
+  new Item({ name: "Elixir of the Mongoose", sellIn: 5, quality: 7 }),
+  new Item({ name: "Sulfuras, Hand of Ragnaros", sellIn: 0, quality: 80 }),
+  new Item({ name: "Sulfuras, Hand of Ragnaros", sellIn: -1, quality: 80 }),
+  new Item({ name: "Backstage passes", sellIn: 15, quality: 20 }),
+  new Item({ name: "Backstage passes", sellIn: 10, quality: 49 }),
+  new Item({ name: "Backstage passes", sellIn: 5, quality: 49 }),
+  new Item({ name: "Conjured Mana Cake", sellIn: 3, quality: 6 }),
 ];
 
 GildedRose.setItems(items);
@@ -25,7 +25,7 @@ if (process.argv.length > 2) {
 for (let i = 0; i < days + 1; i++) {
   console.log("-------- day " + i + " --------");
   console.log("name, sellIn, quality");
-  items.forEach((element) => {
+  GildedRose.items.forEach((element) => {
     console.log(element.name + ", " + element.sellIn + ", " + element.quality);
   });
   console.log();

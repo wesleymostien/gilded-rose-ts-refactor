@@ -1,19 +1,22 @@
 import { Item } from "./item";
 import { ITEM } from "./item.constant";
 
-const DEFAULT_QUALITY = 50;
-const DEFAULT_SELL_IN = 10;
+const DEFAULT = {
+  QUALITY: 50,
+  SULFURAS_QUALITY: 80,
+
+  SELL_IN: 10,
+};
 const MAX_QUALITY = 50;
 const MIN_QUALITY = 0;
 
-describe("Item Class", () => {
-  describe("Constructor", () => {
+describe("Item", () => {
+  describe("constructor", () => {
     const itemTypes = [
       { name: "normal item", itemName: "Test Item" },
       { name: "Aged Brie", itemName: ITEM.AgedBrie },
       { name: "Backstage passes", itemName: ITEM.BackstagePasses },
       { name: "Conjured", itemName: ITEM.Conjured },
-      { name: "Sulfuras", itemName: ITEM.Sulfuras },
     ];
 
     itemTypes.forEach(({ name, itemName }) => {
@@ -31,8 +34,8 @@ describe("Item Class", () => {
           const item = new Item({ name: itemName });
 
           expect(item.name).toBe(itemName);
-          expect(item.quality).toBe(DEFAULT_QUALITY);
-          expect(item.sellIn).toBe(DEFAULT_SELL_IN);
+          expect(item.quality).toBe(DEFAULT.QUALITY);
+          expect(item.sellIn).toBe(DEFAULT.SELL_IN);
         });
 
         it(`should use the provided sellIn value for ${name} item`, () => {
@@ -40,7 +43,7 @@ describe("Item Class", () => {
           const item = new Item({ name: itemName, sellIn: 5 });
 
           expect(item.name).toBe(itemName);
-          expect(item.quality).toBe(DEFAULT_QUALITY);
+          expect(item.quality).toBe(DEFAULT.QUALITY);
           expect(item.sellIn).toBe(5);
         });
 
@@ -49,7 +52,7 @@ describe("Item Class", () => {
 
           expect(item.name).toBe(itemName);
           expect(item.quality).toBe(30);
-          expect(item.sellIn).toBe(DEFAULT_SELL_IN);
+          expect(item.sellIn).toBe(DEFAULT.SELL_IN);
         });
 
         it(`should set quality to MIN_QUALITY if the provided value is below MIN_QUALITY for ${name} item`, () => {
@@ -81,6 +84,18 @@ describe("Item Class", () => {
     });
 
     describe("Sulfuras", () => {
+      it("should default quality of Sulfuras items", () => {
+        const item = new Item({
+          name: ITEM.Sulfuras,
+          quality: -40,
+          sellIn: 15,
+        });
+
+        expect(item.name).toBe("Sulfuras");
+        expect(item.quality).toBe(DEFAULT.SULFURAS_QUALITY);
+        expect(item.sellIn).toBe(15);
+      });
+
       it("should allow Sulfuras items to be created with a suffix", () => {
         const item = new Item({
           name: ITEM.Sulfuras + ", Hand of Ragnaros",
@@ -89,7 +104,7 @@ describe("Item Class", () => {
         });
 
         expect(item.name).toBe("Sulfuras, Hand of Ragnaros");
-        expect(item.quality).toBe(15);
+        expect(item.quality).toBe(DEFAULT.SULFURAS_QUALITY);
         expect(item.sellIn).toBe(5);
       });
     });

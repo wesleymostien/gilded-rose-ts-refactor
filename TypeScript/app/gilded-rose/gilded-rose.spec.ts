@@ -78,21 +78,6 @@ describe("GildedRose", () => {
     });
   });
 
-  describe("Sulfuras, Hand of Ragnaros", () => {
-    it("should not change Sulfuras quality or sellIn", () => {
-      setupAndUpdateItems([
-        new Item({
-          name: "Sulfuras, Hand of Ragnaros",
-          sellIn: 10,
-          quality: 80,
-        }),
-      ]);
-
-      expect(GildedRose.items[0].quality).toBe(80);
-      expect(GildedRose.items[0].sellIn).toBe(10);
-    });
-  });
-
   describe("Backstage passes", () => {
     it("should increase Backstage passes quality", () => {
       setupAndUpdateItems([
@@ -157,6 +142,21 @@ describe("GildedRose", () => {
 
       expect(GildedRose.items[0].quality).toBe(16);
       expect(GildedRose.items[0].sellIn).toBe(-1);
+    });
+  });
+
+  describe("Sulfuras, Hand of Ragnaros", () => {
+    it("should not change Sulfuras quality or sellIn", () => {
+      setupAndUpdateItems([
+        new Item({
+          name: "Sulfuras, Hand of Ragnaros",
+          sellIn: 10,
+          quality: 80,
+        }),
+      ]);
+
+      expect(GildedRose.items[0].quality).toBe(80);
+      expect(GildedRose.items[0].sellIn).toBe(10);
     });
   });
 });
