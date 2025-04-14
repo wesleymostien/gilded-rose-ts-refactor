@@ -1,57 +1,50 @@
-# Gilded Rose
+# Gilded Rose Kata - TypeScript Refactor
 
-This is the Gilded Rose kata in TypeScript.
+This repository contains my refactored solution to the Gilded Rose Kata, implemented in TypeScript.
 
-## Getting started
+## Getting Started
 
-Install dependencies
+To properly evaluate this submission, please follow these steps to set up and run the project.
 
-```sh
-npm install
+### Prerequisites
+
+Ensure you have the following installed on your system:
+
+- **Node.js:** (A recent LTS version is recommended)
+- **npm:** (Node Package Manager - usually comes with Node.js)
+- **Python:** (For TextTest - version 3.x is recommended)
+
+### Setup Instructions
+
+1.  **Clone the Repository:**
+
+    ```bash
+    git clone https://github.com/wesleymostien/gilded-rose-ts-refactor
+    cd TypeScript
+    ```
+
+2.  **Install TypeScript (if not already present):**
+
+    ```bash
+    npm install -D typescript
+    ```
+
+3.  **Install `ts-node` (if needed for running TextTest):**
+
+    ```bash
+    npm install -D ts-node
+    ```
+
+4.  **Install Project Dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+### Running the Tests
+
+To verify the correctness of the refactored code, please run the unit tests using Vitest:
+
+```bash
+npm run test:vitest
 ```
-
-## Run the unit tests from the Command-Line
-
-There are two unit test frameworks to choose from, Jest and Mocha.
-
-```sh
-npm run test:jest
-```
-
-To run all tests in watch mode
-
-```sh
-npm run test:jest:watch
-```
-
-Mocha
-
-```sh
-npm run test:mocha
-```
-
-
-## Run the TextTest fixture from the Command-Line
-
-_You may need to install `ts-node`_
-
-```sh
-npx ts-node test/golden-master-text-test.ts
-```
-
-Or with number of days as args:
-```sh
-npx ts-node test/golden-master-text-test.ts 10
-```
-
-You should make sure the command shown above works when you execute it in a terminal before trying to use TextTest (see below).
-
-
-## Run the TextTest approval test that comes with this project
-
-There are instructions in the [TextTest Readme](../texttests/README.md) for setting up TextTest. You will need to specify the Python executable and interpreter in [config.gr](../texttests/config.gr). Uncomment these lines:
-
-    executable:${TEXTTEST_HOME}/python/texttest_fixture.py
-    interpreter:python
-
-
