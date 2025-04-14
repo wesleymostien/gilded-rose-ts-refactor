@@ -1,4 +1,7 @@
-OMGHAI!
+// Vitest Snapshot v1
+
+exports[`Gilded Rose Approval > should thirtyDays 1`] = `
+"OMGHAI!
 -------- day 0 --------
 name, sellIn, quality
 +5 Dexterity Vest, 10, 20
@@ -371,3 +374,5 @@ Backstage passes, -20, 0
 Backstage passes, -25, 0
 Conjured Mana Cake, -27, 0
 
+"
+`;
